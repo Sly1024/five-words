@@ -22,7 +22,8 @@ time ./bin/Release/net6.0/five-words
 ```
 
 ## Results
-This was run on a Ryzen 7 CPU, but it still runs on a signle thread.
+This was run on a Ryzen 7 CPU, but it still runs on a signle thread.  
+The line with two solutions is when an anagram (cylix <-> xylic) was found.
 ```
 Unique words: 5182
  bemix clunk grypt vozhd waqfs,
