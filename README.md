@@ -9,6 +9,19 @@ For English words I combined these two sources:
 [wordle-answers-alphabetical.txt](https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b)  
 [wordle-allowed-guesses.txt](https://gist.github.com/cfreshman/cdcdf777450c5b5301e439061d29694c)
 
+## The trick
+My idea is that we can use a 26 bit bitmask for each word - indicating which letters are present - to quickly test whether two words
+have common letters. Then we do a brute-force search, and when we already selected (let's say) three words, we combine their bitmasks
+(binary OR), so we can test the bitmask of the fourth word against that combined mask with one binary AND operation.
+
+Another idea is that for each word we can pre-calculate the list of words that have no common letters with it,
+so the inner loops of the brute-force algorithm don't have to iterate over the entire set, only the ones that we
+know work.
+
+Also, we don't care about permutations of the 5 word solutions, so for each word (index 'i') in the list, we only store
+the matching words (index 'j') that come after it (i < j), not the ones before it.
+
+
 ## Compiling
 You need [.NET SDK 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) installed, the `-c Release` is to optimize the code for speed
 ```

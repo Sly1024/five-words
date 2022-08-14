@@ -107,6 +107,8 @@
             var mask = bitmasks[i];
             var list = new List<int>();
             // notice: j starts from (i+1) so we don't count the same pair twice ( [i,j] and [j,i] )
+            // without this optimization, the runtime goes up to 16 mins, instead of 22 seconds
+            // and it obviously finds all permutations of the possible words
             for (int j = i + 1; j < bitmasks.Count; j++) {
                 // if the binary AND of the two bitmasks results in zero => no common bits/letters
                 if ((mask & bitmasks[j]) == 0) {
