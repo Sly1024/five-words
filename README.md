@@ -55,3 +55,35 @@ real    0m21,857s
 user    0m21,837s
 sys     0m0,024s
 ```
+
+### Running in parallel
+This is relateively easy to run in parallel, we just split the top-level loop range into chunks and let each
+thread process a chunk. 
+We could make the number of chunnks equal to the number of CPUs on the machine, but that would not be splitting
+the work equally, because ranges in the beginning need more processing - remember we test words only that come
+*after* the current word.
+
+The dotnet ThreadPool is efficient in scheduling tasks to threads, so we can just split the entire range into 
+small enough chunks and leave the scheduling to the runtime. I chose a chunk size of 50.
+
+This also means we will get results in an indeterminate order, depending on which thread finishes first.
+
+```
+Unique words: 5182
+Chunks: 104
+ brung cylix kempt vozhd waqfs, brung xylic kempt vozhd waqfs,
+ bling treck vozhd waqfs jumpy,
+ bemix clunk grypt vozhd waqfs,
+ clipt jumby kreng vozhd waqfs,
+ blunk cimex grypt vozhd waqfs,
+ glent jumby vozhd waqfs prick,
+ glent vozhd waqfs brick jumpy,
+ gymps vibex chunk fjord waltz,
+ gucks vibex fjord nymph waltz,
+ jumby pling treck vozhd waqfs,
+Done.
+
+real    0m5,000s
+user    1m14,193s
+sys     0m0,045s
+``` 
