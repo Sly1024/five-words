@@ -56,6 +56,17 @@ user    0m21,837s
 sys     0m0,024s
 ```
 
+### What about JavaScript?
+Just out of curiosity I implemented the exact same logic in JavaScript, and ran it with node 17.
+Note: this is single threaded. I could use `worker_threads` to make it parallel, but... maybe later.
+
+```
+real    0m41,400s
+user    0m41,376s
+sys     0m0,054s
+```
+
+
 ### Running in parallel
 This is relateively easy to run in parallel, we just split the top-level loop range into chunks and let each
 thread process a chunk. 
